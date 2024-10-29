@@ -48,20 +48,25 @@ const CandidateSearch = () => {
   if (!currentCandidate) return <p>No more candidates to review.</p>;
 
   return (
-    <div>
+    <div className='container'>
       <h1>Candidate Search</h1>
-      <div>
-        <img src={currentCandidate.avatar_url} alt={`${currentCandidate.login}'s avatar`} width={100} />
-        <h2>{currentCandidate.name}</h2>
-        <p>Username: {currentCandidate.login}</p>
-        <p>Location: {currentCandidate.location || 'N/A'}</p>
-        <p>Email: {currentCandidate.email || 'N/A'}</p>
-        <p>Company: {currentCandidate.company || 'N/A'}</p>
-        <a href={currentCandidate.html_url} target="_blank" rel="noopener noreferrer">GitHub Profile</a>
-      </div>
-      <button onClick={saveCandidate}>+</button>
-      <button onClick={showNextCandidate}>-</button>
+      <ul className='card'>
+        <img src={currentCandidate.avatar_url} alt={`${currentCandidate.login}'s avatar`} />
+        <div className='card-content'>
+          <h2>{currentCandidate.name}</h2>
+          <p>Username: {currentCandidate.login}</p>
+          <p>Location: {currentCandidate.location || 'N/A'}</p>
+          <p>Email: {currentCandidate.email || 'N/A'}</p>
+          <p>Company: {currentCandidate.company || 'N/A'}</p>
+          <a href={currentCandidate.html_url} target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+          <div>
+            <button className='add' onClick={saveCandidate}>+</button>
+            <button className='nah' onClick={showNextCandidate}>-</button>
+          </div>
+        </div>
+      </ul>
     </div>
+
   );
 };
 

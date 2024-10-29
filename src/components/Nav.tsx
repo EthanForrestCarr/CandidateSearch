@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom';
 const Nav = () => {
   return (
     <nav className="nav">
-      <ul>
+      <ul className='nav-container'>
         <li className="nav-item">
           <NavLink
             to="/"
             className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
           >
-            Candidate Search
+            Home
           </NavLink>
         </li>
         <li className="nav-item">
@@ -17,7 +17,7 @@ const Nav = () => {
             to="/SavedCandidates"
             className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
           >
-            Saved Candidates
+            Potential Candidates
           </NavLink>
         </li>
       </ul>
