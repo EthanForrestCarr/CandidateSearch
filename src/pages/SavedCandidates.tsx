@@ -30,12 +30,12 @@ const SavedCandidates = () => {
         </thead>
         <tbody>
           {savedCandidates.map((candidate) => (
-            <tr key={candidate.username}>
+            <tr key={candidate.login}>
               <td>
-                <img src={candidate.avatar} alt={`${candidate.username}'s avatar`} width={50} />
+                <img src={candidate.avatar_url} alt={`${candidate.login}'s avatar`} width={50} />
               </td>
               <td>{candidate.name || 'N/A'}</td>
-              <td>{candidate.username}</td>
+              <td>{candidate.login}</td>
               <td>{candidate.location || 'N/A'}</td>
               <td>{candidate.email || 'N/A'}</td>
               <td>{candidate.company || 'N/A'}</td>

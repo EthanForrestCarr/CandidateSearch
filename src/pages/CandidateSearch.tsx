@@ -22,7 +22,7 @@ const CandidateSearch = () => {
     if (candidates.length > 0 && currentIndex < candidates.length) {
       const fetchCandidateDetails = async () => {
         setLoading(true);
-        const candidateData = await searchGithubUser(candidates[currentIndex].username);
+        const candidateData = await searchGithubUser(candidates[currentIndex].login);
         setCurrentCandidate(candidateData);
         setLoading(false);
       };
@@ -51,9 +51,9 @@ const CandidateSearch = () => {
     <div>
       <h1>Candidate Search</h1>
       <div>
-        <img src={currentCandidate.avatar} alt={`${currentCandidate.username}'s avatar`} width={100} />
+        <img src={currentCandidate.avatar_url} alt={`${currentCandidate.login}'s avatar`} width={100} />
         <h2>{currentCandidate.name}</h2>
-        <p>Username: {currentCandidate.username}</p>
+        <p>Username: {currentCandidate.login}</p>
         <p>Location: {currentCandidate.location || 'N/A'}</p>
         <p>Email: {currentCandidate.email || 'N/A'}</p>
         <p>Company: {currentCandidate.company || 'N/A'}</p>
