@@ -11,7 +11,7 @@ const CandidateSearch = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       setLoading(true);
-      const data = await searchGithub(); // fetches candidate list from API
+      const data = await searchGithub();
       setCandidates(data);
       setLoading(false);
     };
