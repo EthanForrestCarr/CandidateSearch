@@ -1,9 +1,8 @@
-const searchGithub = async () => {
+const searchGithub = async (query: string, page: number = 1) => {
   try {
-    const start = Math.floor(Math.random() * 100000000) + 1;
     console.log(import.meta.env);
     const response = await fetch(
-      `https://api.github.com/users?since=${start}`,
+      `https://api.github.com/search/users?q=${query}&page=${page}&per_page=30`,
       {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
@@ -12,14 +11,13 @@ const searchGithub = async () => {
     );
     console.log('Response:', response.status);
     const data = await response.json();
-    console.log('Fetched Users:', data);
+    console.log('Fetched Users:', data.items);
     if (!response.ok) {
-      throw new Error('invalid API response, check the network tab');
+      throw new Error('Invalid API response, check the network tab');
     }
-    console.log('Data:', data);
-    return data;
+    return data.items;
   } catch (err) {
-    console.log('an error occurred', err);
+    console.log('An error occurred', err);
     return [];
   }
 };
@@ -33,11 +31,11 @@ const searchGithubUser = async (username: string) => {
     });
     const data = await response.json();
     if (!response.ok) {
-      throw new Error('invalid API response, check the network tab');
+      throw new Error('Invalid API response, check the network tab');
     }
     return data;
   } catch (err) {
-    console.log('an error occurred', err);
+    console.log('An error occurred', err);
     return {};
   }
 };

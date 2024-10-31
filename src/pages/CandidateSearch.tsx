@@ -7,26 +7,40 @@ const CandidateSearch = () => {
   const [currentCandidate, setCurrentCandidate] = useState<Candidate | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
-
+  const [page, setPage] = useState(1);
+  const query = 'developer';
   useEffect(() => {
     const fetchCandidates = async () => {
       setLoading(true);
-      const data = await searchGithub();
-      setCandidates(data);
+      const data = await searchGithub(query, page);
+      setCandidates((prev) => [...prev, ...data]);
       setLoading(false);
     };
     fetchCandidates();
-  }, []);
-
+  }, [page]);
   useEffect(() => {
+    
     if (candidates.length > 0 && currentIndex < candidates.length) {
       const fetchCandidateDetails = async () => {
         setLoading(true);
         const candidateData = await searchGithubUser(candidates[currentIndex].login);
-        setCurrentCandidate(candidateData);
+
+       
+        if (
+          candidateData.name &&
+          candidateData.email &&
+          candidateData.location &&
+          candidateData.company
+        ) {
+          setCurrentCandidate(candidateData);
+        } else {
+          showNextCandidate();
+        }
         setLoading(false);
       };
       fetchCandidateDetails();
+    } else if (currentIndex >= candidates.length) {
+      setPage((prevPage) => prevPage + 1);
     }
   }, [currentIndex, candidates]);
 
@@ -40,7 +54,7 @@ const CandidateSearch = () => {
   };
 
   const showNextCandidate = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % candidates.length);
+    setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
   if (loading) return <p>Loading candidate...</p>;
@@ -55,9 +69,9 @@ const CandidateSearch = () => {
         <div className='card-content'>
           <h2>{currentCandidate.name}</h2>
           <p>Username: {currentCandidate.login}</p>
-          <p>Location: {currentCandidate.location || 'N/A'}</p>
-          <p>Email: {currentCandidate.email || 'N/A'}</p>
-          <p>Company: {currentCandidate.company || 'N/A'}</p>
+          <p>Location: {currentCandidate.location}</p>
+          <p>Email: {currentCandidate.email}</p>
+          <p>Company: {currentCandidate.company}</p>
           <a href={currentCandidate.html_url} target="_blank" rel="noopener noreferrer">GitHub Profile</a>
           <div>
             <button className='add' onClick={saveCandidate}>+</button>
@@ -66,7 +80,6 @@ const CandidateSearch = () => {
         </div>
       </ul>
     </div>
-
   );
 };
 
