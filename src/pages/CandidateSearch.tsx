@@ -25,7 +25,6 @@ const CandidateSearch = () => {
         setLoading(true);
         const candidateData = await searchGithubUser(candidates[currentIndex].login);
 
-       
         if (
           candidateData.name &&
           candidateData.email &&
